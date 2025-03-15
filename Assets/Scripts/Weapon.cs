@@ -4,7 +4,7 @@ using UnityEngine;
 public class Weapon : MonoBehaviour
 {
     [SerializeField] private float _bulletSpeed = 10f;
-    [SerializeField] private GameObject _bulletPrefab;
+    [SerializeField] private Rigidbody _bulletPrefab;
     [SerializeField] private Transform _target;
     [SerializeField] private float _shootingInterval = 1f;
 
@@ -29,14 +29,9 @@ public class Weapon : MonoBehaviour
 
     private void SpawnBullet(Vector3 direction)
     {
-        GameObject newBullet = Instantiate(_bulletPrefab, transform.position + direction, Quaternion.identity);
+        Rigidbody newBullet = Instantiate(_bulletPrefab, transform.position + direction, Quaternion.identity);
 
-        Rigidbody bulletRigidbody = newBullet.GetComponent<Rigidbody>();
-
-        if (bulletRigidbody != null)
-        {
-            bulletRigidbody.transform.up = direction;
-            bulletRigidbody.velocity = direction * _bulletSpeed;
-        }
+        newBullet.transform.up = direction;
+        newBullet.velocity = direction * _bulletSpeed;
     }
 }
